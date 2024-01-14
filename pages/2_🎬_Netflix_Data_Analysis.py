@@ -8,7 +8,7 @@ import streamlit as st
 
 # ----- Page configs -----
 st.set_page_config(
-    page_title="{Myname} Portfolio",
+    page_title="Aymen Khemiri Portfolio",
     page_icon="📊",
 )
 
@@ -31,7 +31,7 @@ st.divider()
 def load_data():
     data_path = "data/netflix_titles.csv"
 
-    movies_df = None  # TODO: Ex 2.1: Load the dataset using Pandas, use the data_path variable and set the index column to "show_id"
+    movies_df = pd.read_csv(data_path, index_col='show_id')  # TODO: Ex 2.1: Load the dataset using Pandas, use the data_path variable and set the index column to "show_id"
 
     return movies_df   # a Pandas DataFrame
 
@@ -46,17 +46,17 @@ with st.expander("Check the complete dataset:"):
 # ----- Extracting some basic information from the dataset -----
 
 # TODO: Ex 2.2: What is the min and max release years?
-min_year = None
-max_year = None
+min_year = movies_df['release_year'].min() 
+max_year = movies_df['release_year'].max()
 
 # TODO: Ex 2.3: How many director names are missing values (NaN)?
-num_missing_directors = None
+num_missing_directors =  movies_df['director'].isna().sum()
 
 # TODO: Ex 2.4: How many different countries are there in the data?
-n_countries = None
+n_countries = len(pd.Series(movies_df['country'].str.split(', ').sum()).unique())
 
 # TODO: Ex 2.5: How many characters long are on average the title names?
-avg_title_length = None
+avg_title_length = movies_df['title'].apply(len)
 
 
 # ----- Displaying the extracted information metrics -----
